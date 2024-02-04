@@ -1,6 +1,12 @@
-import { Component, inject, signal } from '@angular/core';
+import { AsyncPipe, NgOptimizedImage } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 
-import { AsyncPipe } from '@angular/common';
+import { CharacterCardComponent } from './character-card.component';
 import { CharacterResult } from '../model';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
@@ -9,9 +15,8 @@ import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   standalone: true,
-  selector: 'app-list',
-  imports: [AsyncPipe, RouterLink],
-  styles: ` :host { @apply flex flex-col grow; }`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: `:host { @apply flex flex-col grow; }`,
   template: `
     @if (characters$ | async; as result) {
       <nav class="flex gap-4">
@@ -37,23 +42,20 @@ import { toObservable } from '@angular/core/rxjs-interop';
       </nav>
       <main class="flex flex-wrap gap-4 justify-center items-start grow">
         @for (character of result.results; track character.id) {
-          <a
-            [routerLink]="['detail', character.id]"
-            class="cursor-pointer rounded border shadow hover:scale-105 hover:shadow-2xl"
-          >
-            <img [attr.src]="character.image" [attr.alt]="character.name" />
-            <h2 class="font-bold text-lg">{{ character.name }}</h2>
-          </a>
+          <app-character-card class="flex" [character]="character" />
         }
       </main>
     }
 
     <span>Test works!</span>
   `,
+  imports: [AsyncPipe, RouterLink, NgOptimizedImage, CharacterCardComponent],
 })
 export class ListComponent {
   http = inject(HttpClient);
+
   page = signal('https://rickandmortyapi.com/api/character');
+
   characters$ = toObservable(this.page).pipe(
     switchMap((url) => this.http.get<CharacterResult>(url)),
   );

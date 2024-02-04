@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-root',
-  imports: [RouterOutlet],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <header>
       <h1 class="text-4xl font-bold">Rick and Morty</h1>
@@ -12,5 +13,6 @@ import { RouterOutlet } from '@angular/router';
     <router-outlet />
     <footer class="flex gap-4">Rick and Morty API</footer>
   `,
+  imports: [RouterOutlet],
 })
 export class RootComponent {}
