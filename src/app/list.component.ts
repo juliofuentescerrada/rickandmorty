@@ -40,7 +40,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
           >
         }
       </nav>
-      <main class="flex flex-wrap gap-4 justify-center items-start grow">
+      <main class="flex grow flex-wrap items-start justify-center gap-4">
         @for (character of result.results; track character.id) {
           <app-character-card class="flex" [character]="character" />
         }

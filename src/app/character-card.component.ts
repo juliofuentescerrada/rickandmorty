@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
   template: `
     <a
       [routerLink]="['detail', character().id]"
-      class="group transition cursor-pointer rounded border shadow hover:scale-105 hover:shadow-2xl overflow-hidden"
+      class="group cursor-pointer overflow-hidden rounded border shadow transition hover:scale-105 hover:shadow-2xl"
     >
       <img
         [ngSrc]="character().image"
@@ -21,7 +21,7 @@ import { RouterLink } from '@angular/router';
         width="300"
         priority
       />
-      <h2 class="font-bold text-lg p-4 flex justify-end">
+      <h2 class="flex justify-end p-4 text-lg font-bold">
         {{ character().name }}
       </h2>
     </a>
